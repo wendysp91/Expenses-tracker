@@ -1,8 +1,6 @@
 //variables
 const form = document.querySelector('.form_extract');
 const list = document.querySelector('.list-extract');
-let extracts = [];
-
 
 var addExtract = (e) => {
     e.preventDefault();
@@ -20,31 +18,7 @@ var addExtract = (e) => {
         amount,
         currency
     }
-    deposits.push(extractObj);
-
-    createHTML();
-    form.reset();
-}
-var showError = (error) => {
-    const errorMessage = document.createElement('p');
-    errorMessage.textContent = error;
-    errorMessage.classList.add('error');
-
-    const containerError = document.querySelector('.error-message');
-    containerError.appendChild(errorMessage);
-
-    setTimeout(() => {
-        errorMessage.remove();
-    }, 5000);
-}
-var createHTML = () => {
-    if (extracts.length > 0) {
-        extracts.forEach(ext => {
-            const li = document.createElement('li');
-            li.innerText = ext.from_account + ' ' + ext.amount + ' ' + ext.currency;
-            list.appendChild(li);
-        });
-    }
+    addItem(extractObj);
 }
 
 //event listeners
@@ -54,4 +28,3 @@ var eventListeners = () => {
 }
 
 eventListeners();
-//functions

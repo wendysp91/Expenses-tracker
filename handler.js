@@ -1,29 +1,11 @@
-//variables
-
 let items = [];
-
-
-var addAccount = (e) => {
-    e.preventDefault();
-    const accountName = document.querySelector('#acc_name').value;
-    const amount = document.querySelector('#amount').value;
-    const currency = document.querySelector('#currency').value;
-
-    if (accountName === '' || amount === '' || currency === '') {
-        showError('Account field cannot be empty');
-        return;
-    }
-
-    const  objectValues = {
-        accountName,
-        amount,
-        currency
-    }
-    accounts.push(accountObj);
-
-    createHTML();
+var addItem = (item, renderFn) => {
+    var createFn = renderFn || createHTML;
+    items.push(item);
+    createHTML(item);
     form.reset();
-}
+};
+
 var showError = (error) => {
     const errorMessage = document.createElement('p');
     errorMessage.textContent = error;
@@ -36,21 +18,16 @@ var showError = (error) => {
         errorMessage.remove();
     }, 5000);
 }
-var createHTML = () => {
-    if (accounts.length > 0) {
-        accounts.forEach(acc => {
-            const li = document.createElement('li');
-            li.innerText = acc.accountName + ' ' + acc.amount + ' ' + acc.currency;
-            list.appendChild(li);
-        });
+
+var createHTML = (item) => {
+    if (items.length > 0) {
+        var row = '';
+        var li = document.createElement('li');
+        var keys = Object.keys(item);
+        for ( var i = 0; i < keys.length; i++){
+            row += `${item[keys[i]]} `;
+        }
+        li.innerText = row;
+        list.appendChild(li);
     }
 }
-
-//event listeners
-
-var eventListeners = () => {
-    form.addEventListener('submit', addAccount);
-}
-
-eventListeners();
-//functions
