@@ -10,7 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <form action="" target="_blank" method="POST">
+        <div class="error-message"></div>
+        <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
+        <form action="" class="form_category" method="POST">
             <div class="mb-3">
                 <label for="category_name" class="col-sm-3 col-form-label">Category name:</label><br>
                 <input type="text" class="form-control" id="category_name" name="category_name"><br>
@@ -19,10 +21,13 @@
                 <label for="desc_category" class="col-sm-2 col-form-label">Description:</label><br>
                 <textarea rows="6" cols="40" class="form-control" id="desc_category" name="desc_category"></textarea><br>
             </div>
-            <input type="submit" value="Create account" class="btn btn-primary">
+            <input type="submit" value="Create category" class="btn btn-primary">
           </form>
     </div>
-    
+    <div class="container">
+        <h2>My categories</h2>
+        <div class="list-categories"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

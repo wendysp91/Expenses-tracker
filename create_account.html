@@ -10,7 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <form action="" target="_blank" method="POST">
+        <div class="error-message"></div>
+        <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
+        <form action="" method="POST" class="form-account">
             <div class="mb-3">
                 <label for="acc_name" class="col-sm-2 col-form-label">Account name:</label><br>
                 <input type="text" class="form-control" id="acc_name" name="acc_name"><br>
@@ -26,7 +28,11 @@
             <input type="submit" value="Create account" class="btn btn-primary">
           </form>
     </div>
+    <div class="container">
+        <h2>My accounts</h2>
+        <div class="list-accounts"></div>
+    </div>
     
-    <script src="script.js"></script>
+    <script src="account.js"></script>
 </body>
 </html>

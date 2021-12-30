@@ -1,3 +1,18 @@
 form{
     padding: 2rem 20rem;
 }
+.back{
+    margin: 2rem 20rem 0;
+}
+.back a{
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.back a:hover{
+    color: #fff;
+    text-decoration: none;
+}
+.error{
+    color: red;
+}

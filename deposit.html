@@ -10,7 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <form action="" target="_blank" method="POST">
+        <div class="error-message"></div>
+        <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
+        <form action="" class="form_deposit" method="POST">
             <div class="mb-3">
                 <label for="to_account" class="col-sm-2 col-form-label">To account:</label><br>
                 <select type="text" class="form-control" id="to_account" name="to_account">
@@ -28,10 +30,13 @@
                 <label for="currency" class="col-sm-2 col-form-label">Currency:</label><br>
                 <input type="text" class="form-control" id="currency" name="currency"><br>
             </div>
-            <input type="submit" value="Create account" class="btn btn-primary">
+            <input type="submit" value="Deposit" class="btn btn-primary">
           </form>
     </div>
-    
+    <div class="container">
+        <h2>My deposits</h2>
+        <div class="list-deposit"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

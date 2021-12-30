@@ -3,26 +3,22 @@ const form = document.querySelector('.form-account');
 const list = document.querySelector('.list-accounts');
 let accounts = [];
 
-//event listeners
 
-var eventListeners = () => {
-    form.addEventListener('submit', agregarAccount);
-
-}
-
-//functions
-var agregarAccount = (e) => {
+var addAccount = (e) => {
     e.preventDefault();
-
     const accountName = document.querySelector('#acc_name').value;
+    const amount = document.querySelector('#amount').value;
+    const currency = document.querySelector('#currency').value;
 
-    if (accountName === '') {
-        showError('Account name cannot be empty');
+    if (accountName === '' || amount === '' || currency === '') {
+        showError('Account field cannot be empty');
         return;
     }
 
     const  accountObj = {
-        accountName
+        accountName,
+        amount,
+        currency
     }
     accounts.push(accountObj);
 
@@ -43,19 +39,19 @@ var showError = (error) => {
 }
 var createHTML = () => {
     if (accounts.length > 0) {
-        console.log(accounts.length)
-
         accounts.forEach(acc => {
-
             const li = document.createElement('li');
-            li.innerText = acc.accountName;
+            li.innerText = acc.accountName + ' ' + acc.amount + ' ' + acc.currency;
             list.appendChild(li);
         });
     }
 }
 
+//event listeners
 
-
-
+var eventListeners = () => {
+    form.addEventListener('submit', addAccount);
+}
 
 eventListeners();
+//functions
