@@ -18,12 +18,19 @@ var addDeposit = (e) => {
         amount,
         currency
     }
-    addItem(depositObj);
+    addItem(depositObj, 'deposit');
 }
 //event listeners
 
 var eventListeners = () => {
     form.addEventListener('submit', addDeposit);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        items = JSON.parse(localStorage.getItem('deposit')) || [];
+        items.forEach(item => {
+            createHTML(item, 'deposit');
+        });
+    });
 }
 
 eventListeners();

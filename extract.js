@@ -18,13 +18,20 @@ var addExtract = (e) => {
         amount,
         currency
     }
-    addItem(extractObj);
+    addItem(extractObj, 'extract');
 }
 
 //event listeners
 
 var eventListeners = () => {
     form.addEventListener('submit', addExtract);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        items = JSON.parse(localStorage.getItem('extract')) || [];
+        items.forEach(item => {
+            createHTML(item, 'extract');
+        });
+    });
 }
 
 eventListeners();

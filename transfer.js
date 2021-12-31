@@ -20,13 +20,20 @@ var addTransfer = (e) => {
         amount,
         currency
     }
-    addItem(transferObj);
+    addItem(transferObj, 'transfer');
 }
 
 //event listeners
 
 var eventListeners = () => {
     form.addEventListener('submit', addTransfer);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        items = JSON.parse(localStorage.getItem('transfer')) || [];
+        items.forEach(item => {
+            createHTML(item, 'transfer');
+        });
+    });
 }
 
 eventListeners();

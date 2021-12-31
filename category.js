@@ -16,13 +16,20 @@ var addCategory = (e) => {
         categoryName,
         description
     }
-    addItem(categoryObj);
+    addItem(categoryObj, 'categories');
 }
 
 //event listeners
 
 var eventListeners = () => {
     form.addEventListener('submit', addCategory);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        items = JSON.parse(localStorage.getItem('categories')) || [];
+        items.forEach(item => {
+            createHTML(item, 'categories');
+        });
+    });
 }
 
 eventListeners();
