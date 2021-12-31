@@ -1,8 +1,8 @@
 let items = [];
-var addItem = (item, renderFn) => {
+var addItem = (item, type, renderFn) => {
     var createFn = renderFn || createHTML;
     items.push(item);
-    createHTML(item);
+    createFn(item, type);
     form.reset();
 };
 
@@ -19,7 +19,7 @@ var showError = (error) => {
     }, 5000);
 }
 
-var createHTML = (item) => {
+var createHTML = (item, type) => {
         var row = '';
         var li = document.createElement('li');
         var keys = Object.keys(item);
@@ -29,9 +29,9 @@ var createHTML = (item) => {
         li.innerText = row;
         list.appendChild(li);
    
-    sincronizeStorage();
+    sincronizeStorage(type);
 }
 
-var sincronizeStorage = () => {
-    localStorage.setItem('items', JSON.stringify(items));
+var sincronizeStorage = (type) => {
+    localStorage.setItem(type, JSON.stringify(items));
 };

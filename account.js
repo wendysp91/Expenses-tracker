@@ -18,7 +18,7 @@ var addAccount = (e) => {
         amount,
         currency
     }
-    addItem(accountObj);
+    addItem(accountObj, 'accounts');
 }
 
 //event listeners
@@ -26,9 +26,9 @@ var eventListeners = () => {
     form.addEventListener('submit', addAccount);
     
     document.addEventListener('DOMContentLoaded', () => {
-        items = JSON.parse(localStorage.getItem('items')) || [];
+        items = JSON.parse(localStorage.getItem('accounts')) || [];
         items.forEach(item => {
-            createHTML(item);
+            createHTML(item, 'accounts');
         });
     });
 }
