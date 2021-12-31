@@ -24,6 +24,13 @@ var addAccount = (e) => {
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addAccount);
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        items = JSON.parse(localStorage.getItem('items')) || [];
+        items.forEach(item => {
+            createHTML(item);
+        });
+    });
 }
 
 eventListeners();

@@ -20,7 +20,6 @@ var showError = (error) => {
 }
 
 var createHTML = (item) => {
-    if (items.length > 0) {
         var row = '';
         var li = document.createElement('li');
         var keys = Object.keys(item);
@@ -29,5 +28,10 @@ var createHTML = (item) => {
         }
         li.innerText = row;
         list.appendChild(li);
-    }
+   
+    sincronizeStorage();
 }
+
+var sincronizeStorage = () => {
+    localStorage.setItem('items', JSON.stringify(items));
+};
