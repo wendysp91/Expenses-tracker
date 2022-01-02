@@ -21,16 +21,21 @@ var addExtract = (e) => {
     addItem(extractObj, 'extract');
 }
 
-//event listeners
+var myOnLoad = (array) => {
+    addOptions("from_account", array);
+};
 
+//event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addExtract);
 
     document.addEventListener('DOMContentLoaded', () => {
         items = JSON.parse(localStorage.getItem('extract')) || [];
+        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
         items.forEach(item => {
             createHTML(item, 'extract');
         });
+        myOnLoad(accounts);
     });
 }
 

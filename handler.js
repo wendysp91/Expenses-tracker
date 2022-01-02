@@ -35,3 +35,14 @@ var createHTML = (item, type) => {
 var sincronizeStorage = (type) => {
     localStorage.setItem(type, JSON.stringify(items));
 };
+
+function addOptions(domElement, array) {
+    var select = document.getElementById(domElement);
+   
+    array.forEach(element => {
+        var option = document.createElement("option");
+        option.text = element[Object.keys(element)[0]];
+        select.add(option);
+    }); 
+}
+

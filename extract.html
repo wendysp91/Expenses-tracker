@@ -13,13 +13,10 @@
         <div class="error-message"></div>
         <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
         <form action="" class="form_extract" method="POST">
-            <div class="mb-3">
+            <div class="mb-3" onLoad="myOnLoad()">
                 <label for="from_account" class="col-sm-2 col-form-label">From account:</label><br>
                 <select class="form-control" id="from_account" name="from_account">
                     <option selected>Select an account</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                 </select><br>
             </div>
             <div class="mb-3">
@@ -38,6 +35,6 @@
         <div class="list-extract"></div>
     </div>
     <script src="handler.js"></script> 
-    <script src="script.js"></script>
+    <script src="extract.js"></script>
 </body>
 </html>

@@ -23,16 +23,22 @@ var addTransfer = (e) => {
     addItem(transferObj, 'transfer');
 }
 
-//event listeners
+var myOnLoad = (array) => {
+    addOptions("to_account", array);
+    addOptions("from_account", array);
+};
 
+//event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addTransfer);
 
     document.addEventListener('DOMContentLoaded', () => {
         items = JSON.parse(localStorage.getItem('transfer')) || [];
+        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
         items.forEach(item => {
             createHTML(item, 'transfer');
         });
+        myOnLoad(accounts);
     });
 }
 

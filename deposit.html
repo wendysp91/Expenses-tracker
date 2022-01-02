@@ -13,13 +13,10 @@
         <div class="error-message"></div>
         <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
         <form action="" class="form_deposit" method="POST">
-            <div class="mb-3">
+            <div class="mb-3" onLoad="myOnLoad()">
                 <label for="to_account" class="col-sm-2 col-form-label">To account:</label><br>
                 <select type="text" class="form-control" id="to_account" name="to_account">
                     <option selected>Select an account</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                 </select><br>
             </div>
             <div class="mb-3">
@@ -38,6 +35,6 @@
         <div class="list-deposit"></div>
     </div>
     <script src="handler.js"></script> 
-    <script src="script.js"></script>
+    <script src="deposit.js"></script>
 </body>
 </html>

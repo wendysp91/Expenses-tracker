@@ -20,16 +20,18 @@ var addDeposit = (e) => {
     }
     addItem(depositObj, 'deposit');
 }
-//event listeners
 
+//event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addDeposit);
 
     document.addEventListener('DOMContentLoaded', () => {
         items = JSON.parse(localStorage.getItem('deposit')) || [];
+        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
         items.forEach(item => {
             createHTML(item, 'deposit');
         });
+        myOnLoad(accounts);
     });
 }
 
