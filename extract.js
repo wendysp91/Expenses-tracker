@@ -25,6 +25,10 @@ var myOnLoad = (array) => {
     addOptions("from_account", array);
 };
 
+var loadCurrency = () => {
+    addCurrencies("currency", currencies);
+};
+
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addExtract);
@@ -36,6 +40,7 @@ var eventListeners = () => {
             createHTML(item, 'extract');
         });
         myOnLoad(accounts);
+        loadCurrency();
     });
 }
 

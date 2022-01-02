@@ -21,6 +21,14 @@ var addDeposit = (e) => {
     addItem(depositObj, 'deposit');
 }
 
+var myOnLoad = (array) => {
+    addOptions("to_account", array);
+};
+
+var loadCurrency = () => {
+    addCurrencies("currency", currencies);
+};
+
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addDeposit);
@@ -32,6 +40,7 @@ var eventListeners = () => {
             createHTML(item, 'deposit');
         });
         myOnLoad(accounts);
+        loadCurrency();
     });
 }
 

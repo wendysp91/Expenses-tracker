@@ -1,4 +1,6 @@
 let items = [];
+const currencies = ["USD", "MXN", "EUR"];
+
 var addItem = (item, type, renderFn) => {
     var createFn = renderFn || createHTML;
     items.push(item);
@@ -45,4 +47,12 @@ function addOptions(domElement, array) {
         select.add(option);
     }); 
 }
-
+function addCurrencies(domElement, array) {
+    var select = document.getElementById(domElement);
+   
+    array.forEach(element => {
+        var option = document.createElement("option");
+        option.text = element;
+        select.add(option);
+    }); 
+}

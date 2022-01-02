@@ -21,6 +21,10 @@ var addAccount = (e) => {
     addItem(accountObj, 'accounts');
 }
 
+var loadCurrency = () => {
+    addCurrencies("currency", currencies);
+};
+
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addAccount);
@@ -30,6 +34,7 @@ var eventListeners = () => {
         items.forEach(item => {
             createHTML(item, 'accounts');
         });
+        loadCurrency();
     });
 }
 

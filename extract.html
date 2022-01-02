@@ -21,11 +21,13 @@
             </div>
             <div class="mb-3">
                 <label for="amount" class="col-sm-2 col-form-label">Amount:</label><br>
-                <input type="text" class="form-control" id="amount" name="amount"><br>
+                <input type="number" class="form-control" id="amount" name="amount"  required min="0" value="0" step="any"><br>
             </div>
-            <div class="mb-3">
-                <label for="currency" class="col-sm-2 col-form-label">Currency:</label><br>
-                <input type="text" class="form-control" id="currency" name="currency"><br>
+            <div class="mb-3" onLoad="loadCurrency()">
+                <label for="currency" class="col-sm-2 col-form-label">Currency</label><br>
+                <select class="form-control" id="currency" name="currency">
+                    <option selected>Select currency</option>
+                </select><br>
             </div>
             <input type="submit" value="Extract" class="btn btn-primary">
           </form>

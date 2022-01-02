@@ -12,21 +12,13 @@
     <div class="container">
         <div class="error-message"></div>
         <div class="back btn btn-primary"><a href="menu.html">< Back to menu</a></div>
-        <form action="" class="form_transfer" method="POST">
-            <div class="mb-3" onLoad="myOnLoad()">
-                <label for="from_account" class="col-sm-2 col-form-label">From account:</label><br>
-                <select class="form-control" id="from_account" name="from_account">
-                    <option selected>Select an account</option>
-                </select><br>
-            </div>
-            <div class="mb-3" onLoad="myOnLoad()">
-                <label for="to_account" class="col-sm-2 col-form-label">To account:</label><br>
-                <select type="text" class="form-control" id="to_account" name="to_account">
-                    <option selected>Select an account</option>
-                </select><br>
+        <form action="" method="POST" class="form-account col-12">
+            <div class="mb-3">
+                <label for="acc_name" class="col-4 col-form-label">Account name:</label><br>
+                <input type="text" class="form-control" id="acc_name" name="acc_name"><br>
             </div>
             <div class="mb-3">
-                <label for="amount" class="col-sm-2 col-form-label">Amount:</label><br>
+                <label for="amount" class="col-4 col-form-label">Amount:</label><br>
                 <input type="number" class="form-control" id="amount" name="amount"  required min="0" value="0" step="any"><br>
             </div>
             <div class="mb-3" onLoad="loadCurrency()">
@@ -35,14 +27,14 @@
                     <option selected>Select currency</option>
                 </select><br>
             </div>
-            <input type="submit" value="Transfer" class="btn btn-primary">
+            <input type="submit" value="Create account" class="btn btn-primary">
           </form>
     </div>
     <div class="container">
-        <h2>My transfers</h2>
-        <div class="list-transfers"></div>
+        <h2>My accounts</h2>
+        <div class="list-accounts"></div>
     </div>
     <script src="handler.js"></script> 
-    <script src="transfer.js"></script>
+    <script src="account.js"></script>
 </body>
 </html>

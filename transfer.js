@@ -28,6 +28,10 @@ var myOnLoad = (array) => {
     addOptions("from_account", array);
 };
 
+var loadCurrency = () => {
+    addCurrencies("currency", currencies);
+};
+
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addTransfer);
@@ -39,6 +43,7 @@ var eventListeners = () => {
             createHTML(item, 'transfer');
         });
         myOnLoad(accounts);
+        loadCurrency();
     });
 }
 
