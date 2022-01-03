@@ -22,15 +22,15 @@ var showError = (error) => {
 }
 
 var createHTML = (item, type) => {
-        var row = '';
-        var li = document.createElement('li');
-        var keys = Object.keys(item);
-        for ( var i = 0; i < keys.length; i++){
-            row += `${item[keys[i]]} `;
-        }
-        li.innerText = row;
-        list.appendChild(li);
-   
+    var row = '';
+    var li = document.createElement('li');
+    var keys = Object.keys(item);
+    for (var i = 0; i < keys.length; i++) {
+        row += `${item[keys[i]]} `;
+    }
+    li.innerText = row;
+    list.appendChild(li);
+
     sincronizeStorage(type);
 }
 
@@ -40,19 +40,20 @@ var sincronizeStorage = (type) => {
 
 function addOptions(domElement, array) {
     var select = document.getElementById(domElement);
-   
+
     array.forEach(element => {
         var option = document.createElement("option");
         option.text = element[Object.keys(element)[0]];
         select.add(option);
-    }); 
+    });
 }
 function addCurrencies(domElement, array) {
     var select = document.getElementById(domElement);
-   
+
     array.forEach(element => {
         var option = document.createElement("option");
         option.text = element;
         select.add(option);
-    }); 
+    });
 }
+

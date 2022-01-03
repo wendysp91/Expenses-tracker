@@ -13,7 +13,7 @@ var addAccount = (e) => {
         return;
     }
 
-    const  accountObj = {
+    const accountObj = {
         accountName,
         amount,
         currency
@@ -28,13 +28,15 @@ var loadCurrency = () => {
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addAccount);
-    
+
     document.addEventListener('DOMContentLoaded', () => {
         items = JSON.parse(localStorage.getItem('accounts')) || [];
         items.forEach(item => {
             createHTML(item, 'accounts');
         });
         loadCurrency();
+        document.cookie = "tasadecambio=1.5";
+        console.log(document.cookie)
     });
 }
 
