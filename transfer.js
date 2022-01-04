@@ -2,6 +2,21 @@
 const form = document.querySelector('.form_transfer');
 const list = document.querySelector('.list-transfers');
 
+async function showData() {
+    try {
+        const json = await getData();
+        console.log(json);
+    } catch (error) {
+        console.log(error)
+    }
+}
+function getData() {
+
+    return fetch('https://freecurrencyapi.net/api/v2/latest?apikey=469b5510-6d19-11ec-a6b5-e75fafe6747a&base_currency=USD')
+        .then(response => response.json())
+        .then(json => json)
+}
+
 var addTransfer = (e) => {
     e.preventDefault();
     const from_account = document.querySelector('#from_account').value;
@@ -19,6 +34,14 @@ var addTransfer = (e) => {
         amount
     }
     addItem(transferObj, 'transfer');
+
+    if (getCookie !== '') {
+        var rate = getCookie();
+        console.log(rate)
+    } else {
+        var apiRate = showData();
+        setCookie("apiRate");
+    }
 
 }
 
@@ -38,22 +61,6 @@ var eventListeners = () => {
             createHTML(item, 'transfer');
         });
         myOnLoad(accounts);
-
-        async function showData() {
-            try {
-                const json = await getData();
-                console.log(json);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        function getData() {
-
-            return fetch('https://freecurrencyapi.net/api/v2/latest?apikey=469b5510-6d19-11ec-a6b5-e75fafe6747a&base_currency=USD')
-                .then(response => response.json())
-                .then(json => json)
-        }
-        showData();
     });
 }
 

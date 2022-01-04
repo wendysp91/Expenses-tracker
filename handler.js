@@ -57,6 +57,17 @@ function addCurrencies(domElement, array) {
     });
 }
 
+function setCookie(value) {
+    var date = new Date("February 10, 2021");
+    var dateString = date.toGMTString();
+    var cookieString = "exchangeRate=" + value + dateString;
+    document.cookie = cookieString;
+}
+
+function getCookie() {
+    document.cookie;
+}
+
 /*
 en transfer if el currency de from-account != to-account
 then if cookie existe
