@@ -49,7 +49,7 @@ var eventListeners = () => {
         }
         function getData() {
 
-            return fetch('http://api.exchangeratesapi.io/v1/latest?access_key=f64eb0d97aa8aea9e421e43d83113f7f')
+            return fetch('https://freecurrencyapi.net/api/v2/latest?apikey=469b5510-6d19-11ec-a6b5-e75fafe6747a&base_currency=USD')
                 .then(response => response.json())
                 .then(json => json)
         }
