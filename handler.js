@@ -57,3 +57,13 @@ function addCurrencies(domElement, array) {
     });
 }
 
+/*
+en transfer if el currency de from-account != to-account
+then if cookie existe
+then get value y hacer cosas
+else
+then hacer peticion a la api
+cuando responda ok
+crear cookie con el valor base y la fecha de expiracion
+
+*/

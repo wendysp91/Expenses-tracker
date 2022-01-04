@@ -35,8 +35,6 @@ var eventListeners = () => {
             createHTML(item, 'accounts');
         });
         loadCurrency();
-        document.cookie = "tasadecambio=1.5";
-        console.log(document.cookie)
     });
 }
 
