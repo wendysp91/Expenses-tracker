@@ -58,15 +58,15 @@ function addCurrencies(domElement, array) {
 }
 
 function setCookie(value) {
-    var date = new Date("February 10, 2021");
+    var date = new Date("February 10, 2022");
     var dateString = date.toGMTString();
-    var cookieString = "exchangeRate=" + value + dateString;
+    var cookieString = "exchangeRate=" + value;
     document.cookie = cookieString;
 }
 
-function getCookie() {
+/*function getCookie() {
     document.cookie;
-}
+}*/
 
 /*
 en transfer if el currency de from-account != to-account
