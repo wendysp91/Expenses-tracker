@@ -17,7 +17,7 @@ function getData() {
         .then(json => json)
 }
 
-var addTransfer = (e) => {
+var addTransfer = async (e) => {
     e.preventDefault();
     const from_account = document.querySelector('#from_account').value;
     const to_account = document.querySelector('#to_account').value;
@@ -39,9 +39,9 @@ var addTransfer = (e) => {
         var rate = document.cookie;
         console.log(rate)
     } else {
-        var apiRate = showData();
+        var apiRate = await showData();
         var data = apiRate[data];
-        var mxn = data[MXN]
+        var mxn = data[MXN];
         setCookie(mxn);
     }
 
