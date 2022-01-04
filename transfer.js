@@ -2,7 +2,22 @@
 const form = document.querySelector('.form_transfer');
 const list = document.querySelector('.list-transfers');
 
-var addTransfer = (e) => {
+async function showData() {
+    try {
+        const json = await getData();
+        console.log(json);
+    } catch (error) {
+        console.log(error)
+    }
+}
+function getData() {
+
+    return fetch('https://freecurrencyapi.net/api/v2/latest?apikey=469b5510-6d19-11ec-a6b5-e75fafe6747a&base_currency=USD')
+        .then(response => response.json())
+        .then(json => json)
+}
+
+var addTransfer = async (e) => {
     e.preventDefault();
     const from_account = document.querySelector('#from_account').value;
     const to_account = document.querySelector('#to_account').value;
@@ -19,6 +34,16 @@ var addTransfer = (e) => {
         amount
     }
     addItem(transferObj, 'transfer');
+
+    if (document.cookie !== '') {
+        var rate = document.cookie;
+        console.log(rate)
+    } else {
+        var apiRate = await showData();
+        var data = apiRate[data];
+        var mxn = data[MXN];
+        setCookie(mxn);
+    }
 
 }
 
@@ -38,22 +63,6 @@ var eventListeners = () => {
             createHTML(item, 'transfer');
         });
         myOnLoad(accounts);
-
-        async function showData() {
-            try {
-                const json = await getData();
-                console.log(json);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        function getData() {
-
-            return fetch('https://freecurrencyapi.net/api/v2/latest?apikey=469b5510-6d19-11ec-a6b5-e75fafe6747a&base_currency=USD')
-                .then(response => response.json())
-                .then(json => json)
-        }
-        showData();
     });
 }
 
