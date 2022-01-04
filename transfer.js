@@ -40,7 +40,8 @@ var addTransfer = (e) => {
         console.log(rate)
     } else {
         var apiRate = showData();
-        var mxn = apiRate.data.MXN
+        var data = apiRate[data];
+        var mxn = data[MXN]
         setCookie(mxn);
     }
 
