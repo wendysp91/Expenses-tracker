@@ -35,8 +35,8 @@ var addTransfer = (e) => {
     }
     addItem(transferObj, 'transfer');
 
-    if (getCookie !== '') {
-        var rate = getCookie();
+    if (document.cookie !== '') {
+        var rate = document.cookie;
         console.log(rate)
     } else {
         var apiRate = showData();
