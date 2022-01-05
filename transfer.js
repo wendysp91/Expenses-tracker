@@ -6,6 +6,7 @@ async function showData() {
     try {
         const json = await getData();
         console.log(json);
+        return json;
     } catch (error) {
         console.log(error)
     }
@@ -35,14 +36,15 @@ var addTransfer = async (e) => {
     }
     addItem(transferObj, 'transfer');
 
-    if (document.cookie !== '') {
-        var rate = document.cookie;
+    if (getCookie() !== '') {
+        var rate = getCookie();
         console.log(rate)
     } else {
         var apiRate = await showData();
-        var data = apiRate[data];
-        var mxn = data[MXN];
-        setCookie(mxn);
+        var data = apiRate['data'];
+        var mxn = data['MXN'];
+        var eur = data['EUR'];
+        setCookie(`mxn: ${mxn}, eur: ${eur} `);
     }
 
 }
