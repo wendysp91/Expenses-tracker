@@ -37,8 +37,6 @@ var createHTML = (item, type) => {
 
 var sincronizeStorage = (type) => {
     localStorage.setItem(type, JSON.stringify(items));
-    console.log(items)
-
 };
 
 function addOptions(domElement, obj) {

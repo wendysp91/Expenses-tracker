@@ -28,6 +28,10 @@ var addTransfer = async (e) => {
         showError('Account fields cannot be empty');
         return;
     }
+    if (from_account === to_account) {
+        showError('From account and to account must be different');
+        return;
+    }
 
     const transferObj = {
         from_account,
@@ -37,17 +41,31 @@ var addTransfer = async (e) => {
     var id = new Date().getUTCMilliseconds();
     addItem(transferObj, id, 'transfer');
 
-    if (getCookie() !== '') {
-        var rate = getCookie();
-        console.log(rate)
-    } else {
-        var apiRate = await showData();
-        var data = apiRate['data'];
-        var mxn = data['MXN'];
-        var eur = data['EUR'];
-        setCookie(`mxn: ${mxn}, eur: ${eur} `);
-    }
+    var items = JSON.parse(localStorage.getItem('accounts')) || {};
 
+    if (items[from_account]['currency'] !== items[to_account]['currency']) {
+        if (getCookie() !== '') {
+            var rate = getCookie();
+            console.log(rate)
+        } else {
+            var apiRate = await showData();
+            var data = apiRate['data'];
+            var mxn = data['MXN'];
+            var eur = data['EUR'];
+            setCookie(`mxn: ${mxn}, eur: ${eur} `);
+        }
+    } else {
+        var number = Number(amount);
+        var amountFrom = items[from_account]['amount'];
+        var newAmountFrom = Number(amountFrom) - number;
+        var amountTo = items[to_account]['amount'];
+        var newAmountTo = Number(amountTo) + number;
+        items[from_account]['amount'] = newAmountFrom;
+        items[to_account]['amount'] = newAmountTo;
+        localStorage.setItem('accounts', JSON.stringify(items))
+
+
+    }
 }
 
 var myOnLoad = (obj) => {
