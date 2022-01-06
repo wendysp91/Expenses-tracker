@@ -13,16 +13,17 @@ var addDeposit = (e) => {
         return;
     }
 
-    const  depositObj = {
+    const depositObj = {
         to_account,
         amount,
         currency
     }
-    addItem(depositObj, 'deposit');
+    var id = new Date().getUTCMilliseconds();
+    addItem(depositObj, id, 'deposit');
 }
 
-var myOnLoad = (array) => {
-    addOptions("to_account", array);
+var myOnLoad = (obj) => {
+    addOptions("to_account", obj);
 };
 
 var loadCurrency = () => {
@@ -34,11 +35,11 @@ var eventListeners = () => {
     form.addEventListener('submit', addDeposit);
 
     document.addEventListener('DOMContentLoaded', () => {
-        items = JSON.parse(localStorage.getItem('deposit')) || [];
-        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        items.forEach(item => {
-            createHTML(item, 'deposit');
-        });
+        items = JSON.parse(localStorage.getItem('deposit')) || {};
+        accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+        for (const keys in items) {
+            createHTML(items[keys], 'deposit');
+        }
         myOnLoad(accounts);
         loadCurrency();
     });

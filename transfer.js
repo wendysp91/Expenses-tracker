@@ -34,7 +34,8 @@ var addTransfer = async (e) => {
         to_account,
         amount
     }
-    addItem(transferObj, 'transfer');
+    var id = new Date().getUTCMilliseconds();
+    addItem(transferObj, id, 'transfer');
 
     if (getCookie() !== '') {
         var rate = getCookie();
@@ -49,9 +50,9 @@ var addTransfer = async (e) => {
 
 }
 
-var myOnLoad = (array) => {
-    addOptions("to_account", array);
-    addOptions("from_account", array);
+var myOnLoad = (obj) => {
+    addOptions("to_account", obj);
+    addOptions("from_account", obj);
 };
 
 //event listeners
@@ -59,11 +60,11 @@ var eventListeners = () => {
     form.addEventListener('submit', addTransfer);
 
     document.addEventListener('DOMContentLoaded', () => {
-        items = JSON.parse(localStorage.getItem('transfer')) || [];
-        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        items.forEach(item => {
-            createHTML(item, 'transfer');
-        });
+        items = JSON.parse(localStorage.getItem('transfer')) || {};
+        accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+        for (const keys in items) {
+            createHTML(items[keys], 'transfer');
+        }
         myOnLoad(accounts);
     });
 }

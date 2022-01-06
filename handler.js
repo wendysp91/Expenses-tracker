@@ -1,10 +1,10 @@
 
-let items = [];
+let items = new Object();
 const currencies = ["USD", "MXN", "EUR"];
 
-var addItem = (item, type, renderFn) => {
+var addItem = (item, id, type, renderFn) => {
     var createFn = renderFn || createHTML;
-    items.push(item);
+    items[id] = item;
     createFn(item, type);
     form.reset();
 };
@@ -25,10 +25,10 @@ var showError = (error) => {
 var createHTML = (item, type) => {
     var row = '';
     var li = document.createElement('li');
-    var keys = Object.keys(item);
-    for (var i = 0; i < keys.length; i++) {
-        row += `${item[keys[i]]} `;
+    for (const keys in item) {
+        row += `${item[keys]} `;
     }
+
     li.innerText = row;
     list.appendChild(li);
 
@@ -37,17 +37,20 @@ var createHTML = (item, type) => {
 
 var sincronizeStorage = (type) => {
     localStorage.setItem(type, JSON.stringify(items));
+    console.log(items)
+
 };
 
-function addOptions(domElement, array) {
+function addOptions(domElement, obj) {
     var select = document.getElementById(domElement);
 
-    array.forEach(element => {
+    for (const key in obj) {
         var option = document.createElement("option");
-        option.text = element[Object.keys(element)[0]];
+        option.text = key;
         select.add(option);
-    });
+    }
 }
+
 function addCurrencies(domElement, array) {
     var select = document.getElementById(domElement);
 
@@ -73,6 +76,8 @@ function getCookie() {
 }
 
 /*
+
+
 en transfer if el currency de from-account != to-account
 then if cookie existe
 then get value y hacer cosas

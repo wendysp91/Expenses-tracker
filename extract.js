@@ -13,16 +13,17 @@ var addExtract = (e) => {
         return;
     }
 
-    const  extractObj = {
+    const extractObj = {
         from_account,
         amount,
         currency
     }
-    addItem(extractObj, 'extract');
+    var id = new Date().getUTCMilliseconds();
+    addItem(extractObj, id, 'extract');
 }
 
-var myOnLoad = (array) => {
-    addOptions("from_account", array);
+var myOnLoad = (obj) => {
+    addOptions("from_account", obj);
 };
 
 var loadCurrency = () => {
@@ -34,11 +35,11 @@ var eventListeners = () => {
     form.addEventListener('submit', addExtract);
 
     document.addEventListener('DOMContentLoaded', () => {
-        items = JSON.parse(localStorage.getItem('extract')) || [];
-        accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        items.forEach(item => {
-            createHTML(item, 'extract');
-        });
+        items = JSON.parse(localStorage.getItem('extract')) || {};
+        accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+        for (const keys in items) {
+            createHTML(items[keys], 'extract');
+        }
         myOnLoad(accounts);
         loadCurrency();
     });

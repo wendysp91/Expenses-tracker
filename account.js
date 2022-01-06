@@ -12,13 +12,20 @@ var addAccount = (e) => {
         showError('Account field cannot be empty');
         return;
     }
-
+    var items = JSON.parse(localStorage.getItem('accounts')) || {};
+    for (const keys in items) {
+        if (accountName === items[keys]['accountName']) {
+            showError('Account already exist');
+            return;
+        }
+    }
     const accountObj = {
         accountName,
         amount,
         currency
     }
-    addItem(accountObj, 'accounts');
+    var id = accountObj.accountName;
+    addItem(accountObj, id, 'accounts');
 }
 
 var loadCurrency = () => {
@@ -30,10 +37,10 @@ var eventListeners = () => {
     form.addEventListener('submit', addAccount);
 
     document.addEventListener('DOMContentLoaded', () => {
-        items = JSON.parse(localStorage.getItem('accounts')) || [];
-        items.forEach(item => {
-            createHTML(item, 'accounts');
-        });
+        items = JSON.parse(localStorage.getItem('accounts')) || {};
+        for (const keys in items) {
+            createHTML(items[keys], 'accounts');
+        }
         loadCurrency();
     });
 }
