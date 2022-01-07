@@ -64,7 +64,7 @@ function setCookie(value) {
     var date = new Date();
     date.setDate(date.getDate() + 1);
     var dateString = date.toGMTString();
-    var cookieString = `exchangeRate=${value}; expirationDate=${dateString}`;
+    var cookieString = `${value};expirationDate=${dateString}`;
     /* document.cookie = cookieString;*/
     window.cookieMock = cookieString;
     console.log(window.cookieMock)
@@ -72,6 +72,7 @@ function setCookie(value) {
 }
 
 function getCookie() {
+
     /*return document.cookie;*/
     window.cookieMock = ''
     return window.cookieMock;
