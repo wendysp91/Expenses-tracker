@@ -20,6 +20,14 @@ var addExtract = (e) => {
     }
     var id = new Date().getUTCMilliseconds();
     addItem(extractObj, id, 'extract');
+
+    var items = JSON.parse(localStorage.getItem('accounts')) || {};
+    var number = Number(amount);
+    var amountFrom = items[from_account]['amount'];
+    var newAmountFrom = Number(amountFrom) - number;
+    items[from_account]['amount'] = newAmountFrom;
+    localStorage.setItem('accounts', JSON.stringify(items))
+
 }
 
 var myOnLoad = (obj) => {

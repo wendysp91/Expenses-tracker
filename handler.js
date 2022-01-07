@@ -60,16 +60,20 @@ function addCurrencies(domElement, array) {
 }
 
 function setCookie(value) {
-    /* var date = new Date();
-     date.setDate(date.getDate() + 1);
-     var dateString = date.toGMTString();
-     var cookieString = "exchangeRate=" + value + dateString;
-     document.cookie = cookieString;*/
-    window.cookieMock = value;
+
+    var date = new Date();
+    date.setDate(date.getDate() + 1);
+    var dateString = date.toGMTString();
+    var cookieString = `exchangeRate=${value}; expirationDate=${dateString}`;
+    /* document.cookie = cookieString;*/
+    window.cookieMock = cookieString;
+    console.log(window.cookieMock)
+
 }
 
 function getCookie() {
     /*return document.cookie;*/
+    window.cookieMock = ''
     return window.cookieMock;
 }
 
@@ -83,7 +87,7 @@ else
 then hacer peticion a la api
 cuando responda ok
 crear cookie con el valor base y la fecha de expiracion
-
+exchangeRate=mxn: 20.51118, eur: 0.88531; expirationDate=Fri, 07 Jan 2022 23:28:52 GMT
 
 function setCookie(name,value,days) {
     var expires = "";

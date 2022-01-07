@@ -38,22 +38,51 @@ var addTransfer = async (e) => {
         to_account,
         amount
     }
-    var id = new Date().getUTCMilliseconds();
-    addItem(transferObj, id, 'transfer');
 
     var items = JSON.parse(localStorage.getItem('accounts')) || {};
 
+    if (Number(items[from_account]['amount']) === 0 || Number(items[from_account]['amount']) < amount) {
+        showError('Amount in from account is insufficient');
+        return;
+    }
     if (items[from_account]['currency'] !== items[to_account]['currency']) {
-        if (getCookie() !== '') {
-            var rate = getCookie();
-            console.log(rate)
+        /* var cookie = getCookie();
+         if (cookie !== '') {
+             console.log(cookie)
+         } else {
+             var apiRate = await showData();
+             var data = apiRate['data'];
+             var mxn = data['MXN'];
+             var eur = data['EUR'];
+
+            
+
+             setCookie(`mxn: ${mxn}, eur: ${eur}`);
+         }*/
+
+        var fromCurrencyToUSD = { 'USD': 1, 'MXN': 0.05, 'EUR': 1.25 };
+        var fromUSDToCurrency = { 'USD': 1, 'MXN': 20, 'EUR': 0.8 };
+        var number = Number(amount);
+
+        var amountFrom = items[from_account]['amount'];
+        var newAmountFrom = Number(amountFrom) - number;
+        var currencyFrom = items[from_account]['currency'];
+
+        var amountTo = items[to_account]['amount'];
+        var newAmountTo = 0;
+        var currencyTo = items[to_account]['currency'];
+
+        if (currencyFrom === 'USD') {
+            newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
+        } else if (currencyTo === 'USD') {
+            newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
         } else {
-            var apiRate = await showData();
-            var data = apiRate['data'];
-            var mxn = data['MXN'];
-            var eur = data['EUR'];
-            setCookie(`mxn: ${mxn}, eur: ${eur} `);
+            newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
         }
+        items[from_account]['amount'] = newAmountFrom;
+        items[to_account]['amount'] = newAmountTo;
+        localStorage.setItem('accounts', JSON.stringify(items))
+
     } else {
         var number = Number(amount);
         var amountFrom = items[from_account]['amount'];
@@ -64,8 +93,9 @@ var addTransfer = async (e) => {
         items[to_account]['amount'] = newAmountTo;
         localStorage.setItem('accounts', JSON.stringify(items))
 
-
     }
+    var id = new Date().getUTCMilliseconds();
+    addItem(transferObj, id, 'transfer');
 }
 
 var myOnLoad = (obj) => {

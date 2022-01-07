@@ -20,6 +20,14 @@ var addDeposit = (e) => {
     }
     var id = new Date().getUTCMilliseconds();
     addItem(depositObj, id, 'deposit');
+
+    var items = JSON.parse(localStorage.getItem('accounts')) || {};
+    var number = Number(amount);
+    var amountTo = items[to_account]['amount'];
+    var newAmountTo = Number(amountTo) + number;
+    items[to_account]['amount'] = newAmountTo;
+    localStorage.setItem('accounts', JSON.stringify(items))
+
 }
 
 var myOnLoad = (obj) => {
