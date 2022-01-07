@@ -46,42 +46,43 @@ var addTransfer = async (e) => {
         return;
     }
     if (items[from_account]['currency'] !== items[to_account]['currency']) {
-        /* var cookie = getCookie();
-         if (cookie !== '') {
-             console.log(cookie)
-         } else {
-             var apiRate = await showData();
-             var data = apiRate['data'];
-             var mxn = data['MXN'];
-             var eur = data['EUR'];
-
-            
-
-             setCookie(`mxn: ${mxn}, eur: ${eur}`);
-         }*/
-
-        var fromCurrencyToUSD = { 'USD': 1, 'MXN': 0.05, 'EUR': 1.25 };
-        var fromUSDToCurrency = { 'USD': 1, 'MXN': 20, 'EUR': 0.8 };
-        var number = Number(amount);
-
-        var amountFrom = items[from_account]['amount'];
-        var newAmountFrom = Number(amountFrom) - number;
-        var currencyFrom = items[from_account]['currency'];
-
-        var amountTo = items[to_account]['amount'];
-        var newAmountTo = 0;
-        var currencyTo = items[to_account]['currency'];
-
-        if (currencyFrom === 'USD') {
-            newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
-        } else if (currencyTo === 'USD') {
-            newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
+        var cookie = getCookie();
+        if (cookie !== '') {
+            console.log(cookie)
         } else {
-            newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
+            var apiRate = await showData();
+            var data = apiRate['data'];
+            var mxn = data['MXN'];
+            var eur = data['EUR'];
+            var mxntousd = 1 / mxn;
+            var eurtousd = 1 / eur;
+
+            var fromCurrencyToUSD = { 'USD': 1, 'MXN': mxntousd, 'EUR': eurtousd };
+            var fromUSDToCurrency = { 'USD': 1, 'MXN': mxn, 'EUR': eur };
+            var number = Number(amount);
+
+            var amountFrom = items[from_account]['amount'];
+            var newAmountFrom = Number(amountFrom) - number;
+            var currencyFrom = items[from_account]['currency'];
+
+            var amountTo = items[to_account]['amount'];
+            var newAmountTo = 0;
+            var currencyTo = items[to_account]['currency'];
+
+            if (currencyFrom === 'USD') {
+                newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
+            } else if (currencyTo === 'USD') {
+                newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
+            } else {
+                newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
+            }
+
+            items[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
+            items[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
+            localStorage.setItem('accounts', JSON.stringify(items))
+
+            setCookie(`${fromCurrencyToUSD}, ${fromUSDToCurrency}`);
         }
-        items[from_account]['amount'] = newAmountFrom;
-        items[to_account]['amount'] = newAmountTo;
-        localStorage.setItem('accounts', JSON.stringify(items))
 
     } else {
         var number = Number(amount);
