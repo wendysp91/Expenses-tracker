@@ -18,11 +18,26 @@ function getData() {
         .then(json => json)
 }
 
+
+
 var addTransfer = async (e) => {
+
     e.preventDefault();
-    const from_account = document.querySelector('#from_account').value;
-    const to_account = document.querySelector('#to_account').value;
-    const amount = document.querySelector('#amount').value;
+    var from_account = document.querySelector('#from_account').value;
+    var to_account = document.querySelector('#to_account').value;
+    var amount = document.querySelector('#amount').value;
+
+    var accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+    var number = Number(amount);
+    var amountFrom = accounts[from_account]['amount'];
+    var newAmountFrom = Number(amountFrom) - number;
+    var currencyFrom = accounts[from_account]['currency'];
+
+    var amountTo = accounts[to_account]['amount'];
+    var newAmountTo = 0;
+    var currencyTo = accounts[to_account]['currency'];
+
+
 
     if (from_account === '' || to_account === '' || amount === '') {
         showError('Account fields cannot be empty');
@@ -39,39 +54,31 @@ var addTransfer = async (e) => {
         amount
     }
 
-    var items = JSON.parse(localStorage.getItem('accounts')) || {};
 
-    if (Number(items[from_account]['amount']) === 0 || Number(items[from_account]['amount']) < amount) {
+
+    if (Number(accounts[from_account]['amount']) === 0 || Number(accounts[from_account]['amount']) < amount) {
         showError('Amount in from account is insufficient');
         return;
     }
-    if (items[from_account]['currency'] !== items[to_account]['currency']) {
+
+    if (accounts[from_account]['currency'] !== accounts[to_account]['currency']) {
         var cookie = getCookie();
         if (cookie !== '') {
             cookies = document.cookie.split(';');
             var fromCurrencyToUSD = cookies[0];
             var fromUSDToCurrency = cookies[1];
 
-            var number = Number(amount);
-            var amountFrom = items[from_account]['amount'];
-            var newAmountFrom = Number(amountFrom) - number;
-            var currencyFrom = items[from_account]['currency'];
-
-            var amountTo = items[to_account]['amount'];
-            var newAmountTo = 0;
-            var currencyTo = items[to_account]['currency'];
-
-            if (currencyFrom === 'USD') {
-                newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
-            } else if (currencyTo === 'USD') {
-                newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
-            } else {
-                newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
-            }
-
-            items[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
-            items[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
-            localStorage.setItem('accounts', JSON.stringify(items));
+            transferOperation(from_account,
+                to_account,
+                accounts,
+                number,
+                newAmountFrom,
+                currencyFrom,
+                amountTo,
+                newAmountTo,
+                currencyTo,
+                fromCurrencyToUSD,
+                fromUSDToCurrency)
 
         } else {
             var apiRate = await showData();
@@ -84,55 +91,47 @@ var addTransfer = async (e) => {
             var fromCurrencyToUSD = { 'USD': 1, 'MXN': mxntousd, 'EUR': eurtousd };
             var fromUSDToCurrency = { 'USD': 1, 'MXN': mxn, 'EUR': eur };
 
-            var number = Number(amount);
-            var amountFrom = items[from_account]['amount'];
-            var newAmountFrom = Number(amountFrom) - number;
-            var currencyFrom = items[from_account]['currency'];
-
-            var amountTo = items[to_account]['amount'];
-            var newAmountTo = 0;
-            var currencyTo = items[to_account]['currency'];
-
-            if (currencyFrom === 'USD') {
-                newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
-            } else if (currencyTo === 'USD') {
-                newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
-            } else {
-                newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
-            }
-
-            items[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
-            items[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
-            localStorage.setItem('accounts', JSON.stringify(items));
+            transferOperation(from_account,
+                to_account,
+                accounts,
+                number,
+                newAmountFrom,
+                currencyFrom,
+                amountTo,
+                newAmountTo,
+                currencyTo,
+                fromCurrencyToUSD,
+                fromUSDToCurrency)
 
             setCookie(JSON.stringify(fromCurrencyToUSD) + ";" + JSON.stringify(fromUSDToCurrency));
         }
 
     } else {
         var number = Number(amount);
-        var amountFrom = items[from_account]['amount'];
+        var amountFrom = accounts[from_account]['amount'];
         var newAmountFrom = Number(amountFrom) - number;
-        var amountTo = items[to_account]['amount'];
+        var amountTo = accounts[to_account]['amount'];
         var newAmountTo = Number(amountTo) + number;
-        items[from_account]['amount'] = newAmountFrom;
-        items[to_account]['amount'] = newAmountTo;
-        localStorage.setItem('accounts', JSON.stringify(items))
+        accounts[from_account]['amount'] = newAmountFrom;
+        accounts[to_account]['amount'] = newAmountTo;
+        localStorage.setItem('accounts', JSON.stringify(accounts))
 
     }
     var id = new Date().getUTCMilliseconds();
     addItem(transferObj, id, 'transfer');
 }
 
-var transferOperation = () => {
-    var number = Number(amount);
-    var amountFrom = items[from_account]['amount'];
-    var newAmountFrom = Number(amountFrom) - number;
-    var currencyFrom = items[from_account]['currency'];
-
-    var amountTo = items[to_account]['amount'];
-    var newAmountTo = 0;
-    var currencyTo = items[to_account]['currency'];
-
+var transferOperation = (from_account,
+    to_account,
+    accounts,
+    number,
+    newAmountFrom,
+    currencyFrom,
+    amountTo,
+    newAmountTo,
+    currencyTo,
+    fromCurrencyToUSD,
+    fromUSDToCurrency) => {
     if (currencyFrom === 'USD') {
         newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
     } else if (currencyTo === 'USD') {
@@ -141,14 +140,17 @@ var transferOperation = () => {
         newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
     }
 
-    items[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
-    items[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
-    localStorage.setItem('accounts', JSON.stringify(items))
+    accounts[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
+    accounts[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
+    localStorage.setItem('accounts', JSON.stringify(accounts));
 }
 
 var myOnLoad = (obj) => {
     addOptions("to_account", obj);
     addOptions("from_account", obj);
+    from_account = document.querySelector('#from_account').value;
+    to_account = document.querySelector('#to_account').value;
+    amount = document.querySelector('#amount').value;
 };
 
 //event listeners
