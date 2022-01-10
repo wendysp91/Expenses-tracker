@@ -108,8 +108,8 @@ var addTransfer = async (e) => {
             }
             transferOperation(paramObj)
 
-            setCookie(JSON.stringify("rate=" + fromCurrencyToUSD) + ";" + JSON.stringify(fromUSDToCurrency));
         }
+        setCookie(JSON.stringify("rate=" + fromCurrencyToUSD) + ";" + JSON.stringify(fromUSDToCurrency));
 
     } else {
         var number = Number(amount);
