@@ -64,7 +64,7 @@ function setCookie(value) {
     var date = new Date();
     date.setDate(date.getDate() + 1);
     var dateString = date.toGMTString();
-    document.cookie = value + ", expires=" + dateString;
+    document.cookie = value + "expires=" + dateString;
     console.log(document.cookie)
 
 }
