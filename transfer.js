@@ -64,7 +64,7 @@ var addTransfer = async (e) => {
     if (accounts[from_account]['currency'] !== accounts[to_account]['currency']) {
         var cookie = getCookie();
         if (cookie !== '') {
-            cookies = document.cookie.split(';');
+            cookies = document.cookie.split(',');
             var fromCurrencyToUSD = cookies[0];
             var fromUSDToCurrency = cookies[1];
             paramObj = {
