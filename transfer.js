@@ -67,8 +67,8 @@ var addTransfer = async (e) => {
             cookies = document.cookie.split(';');
             var fromCurrencyToUSD = cookies[0];
             var fromUSDToCurrency = cookies[1];
-
-            transferOperation(from_account,
+            paramObj = {
+                from_account,
                 to_account,
                 accounts,
                 number,
@@ -78,7 +78,9 @@ var addTransfer = async (e) => {
                 newAmountTo,
                 currencyTo,
                 fromCurrencyToUSD,
-                fromUSDToCurrency)
+                fromUSDToCurrency
+            }
+            transferOperation(paramObj)
 
         } else {
             var apiRate = await showData();
@@ -91,7 +93,8 @@ var addTransfer = async (e) => {
             var fromCurrencyToUSD = { 'USD': 1, 'MXN': mxntousd, 'EUR': eurtousd };
             var fromUSDToCurrency = { 'USD': 1, 'MXN': mxn, 'EUR': eur };
 
-            transferOperation(from_account,
+            paramObj = {
+                from_account,
                 to_account,
                 accounts,
                 number,
@@ -101,9 +104,11 @@ var addTransfer = async (e) => {
                 newAmountTo,
                 currencyTo,
                 fromCurrencyToUSD,
-                fromUSDToCurrency)
+                fromUSDToCurrency
+            }
+            transferOperation(paramObj)
 
-            setCookie(JSON.stringify(fromCurrencyToUSD) + ";" + JSON.stringify(fromUSDToCurrency));
+            setCookie(JSON.stringify("rate=" + fromCurrencyToUSD) + ";" + JSON.stringify(fromUSDToCurrency));
         }
 
     } else {
@@ -121,28 +126,18 @@ var addTransfer = async (e) => {
     addItem(transferObj, id, 'transfer');
 }
 
-var transferOperation = (from_account,
-    to_account,
-    accounts,
-    number,
-    newAmountFrom,
-    currencyFrom,
-    amountTo,
-    newAmountTo,
-    currencyTo,
-    fromCurrencyToUSD,
-    fromUSDToCurrency) => {
-    if (currencyFrom === 'USD') {
-        newAmountTo = fromUSDToCurrency[currencyTo] * number + Number(amountTo);
-    } else if (currencyTo === 'USD') {
-        newAmountTo = fromCurrencyToUSD[currencyFrom] * number + Number(amountTo);
+var transferOperation = (paramObj) => {
+    if (paramObj['currencyFrom'] === 'USD') {
+        paramObj['newAmountTo'] = paramObj['fromUSDToCurrency'][paramObj['currencyTo']] * paramObj['number'] + Number(paramObj['amountTo']);
+    } else if (paramObj['currencyTo'] === 'USD') {
+        paramObj['newAmountTo'] = paramObj['fromCurrencyToUSD'][paramObj['currencyFrom']] * paramObj['number'] + Number(paramObj['amountTo']);
     } else {
-        newAmountTo = fromCurrencyToUSD[currencyFrom] * number * fromUSDToCurrency[currencyTo] + Number(amountTo);
+        paramObj['newAmountTo'] = paramObj['fromCurrencyToUSD'][paramObj['currencyFrom']] * paramObj['number'] * paramObj['fromUSDToCurrency'][paramObj['currencyTo']] + Number(paramObj['amountTo']);
     }
 
-    accounts[from_account]['amount'] = Math.round((newAmountFrom + Number.EPSILON) * 100) / 100;
-    accounts[to_account]['amount'] = Math.round((newAmountTo + Number.EPSILON) * 100) / 100;
-    localStorage.setItem('accounts', JSON.stringify(accounts));
+    paramObj['accounts'][paramObj['from_account']]['amount'] = Math.round((paramObj['newAmountFrom'] + Number.EPSILON) * 100) / 100;
+    paramObj['accounts'][paramObj['to_account']]['amount'] = Math.round((paramObj['newAmountTo'] + Number.EPSILON) * 100) / 100;
+    localStorage.setItem('accounts', JSON.stringify(paramObj['accounts']));
 }
 
 var myOnLoad = (obj) => {
