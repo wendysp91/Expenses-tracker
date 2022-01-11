@@ -13,30 +13,33 @@
 
 <body>
     <div class="container">
-        <div class="error-message"></div>
-        <div class="back btn btn-primary"><a href="index.html">
-                < Back to menu</a>
+        <div class="row mt-5">
+            <div class="d-flex flex-column align-items-sm-center">
+                <div class="error-message"></div>
+                <a class="btn btn-primary col-sm-8 mb-3" href="index.html" role="button">
+                    < Back to menu</a>
+                        <form class="form_deposit col-sm-8 d-flex flex-column" method="POST">
+                            <div class="mb-3" onLoad="myOnLoad()">
+                                <label for="to_account" class="col-form-label">To account:</label><br>
+                                <select type="text" class="form-control" id="to_account" name="to_account">
+                                    <option selected>Select an account</option>
+                                </select><br>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amount" class="col-form-label">Amount:</label><br>
+                                <input type="number" class="form-control" id="amount" name="amount" required min="0"
+                                    value="0" step="any"><br>
+                            </div>
+                            <div class="mb-3" onLoad="loadCurrency()">
+                                <label for="currency" class="col-form-label">Currency</label><br>
+                                <select class="form-control" id="currency" name="currency">
+                                    <option selected>Select currency</option>
+                                </select><br>
+                            </div>
+                            <input type="submit" value="Deposit" class="btn btn-primary">
+                        </form>
+            </div>
         </div>
-        <form action="" class="form_deposit" method="POST">
-            <div class="mb-3" onLoad="myOnLoad()">
-                <label for="to_account" class="col-sm-2 col-form-label">To account:</label><br>
-                <select type="text" class="form-control" id="to_account" name="to_account">
-                    <option selected>Select an account</option>
-                </select><br>
-            </div>
-            <div class="mb-3">
-                <label for="amount" class="col-sm-2 col-form-label">Amount:</label><br>
-                <input type="number" class="form-control" id="amount" name="amount" required min="0" value="0"
-                    step="any"><br>
-            </div>
-            <div class="mb-3" onLoad="loadCurrency()">
-                <label for="currency" class="col-sm-2 col-form-label">Currency</label><br>
-                <select class="form-control" id="currency" name="currency">
-                    <option selected>Select currency</option>
-                </select><br>
-            </div>
-            <input type="submit" value="Deposit" class="btn btn-primary">
-        </form>
     </div>
     <div class="container">
         <h2>My deposits</h2>

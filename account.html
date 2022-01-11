@@ -13,32 +13,57 @@
 
 <body>
     <div class="container">
-        <div class="error-message"></div>
-        <div class="back btn btn-primary"><a href="index.html">
-                < Back to menu</a>
+        <div class="row mt-5">
+            <div class="d-flex flex-column align-items-sm-center">
+                <div class="error-message"></div>
+                <a class="btn btn-primary col-sm-8 mb-3" href="index.html" role="button">
+                    < Back to menu</a>
+
+                        <form method="POST" class="form-account col-sm-8 d-flex flex-column">
+                            <div class="mb-3">
+                                <label for="acc_name" class="col-form-label">Account name:</label><br>
+                                <input type="text" class="form-control" id="acc_name" name="acc_name"><br>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amount" class="col-form-label">Amount:</label><br>
+                                <input type="number" class="form-control" id="amount" name="amount" required min="0"
+                                    value="0" step="any"><br>
+                            </div>
+                            <div class="mb-3" onLoad="loadCurrency()">
+                                <label for="currency" class="col-form-label">Currency</label><br>
+                                <select class="form-control" id="currency" name="currency">
+                                    <option selected>Select currency</option>
+                                </select><br>
+                            </div>
+                            <input type="submit" value="Create account" class="btn btn-primary">
+                        </form>
+            </div>
         </div>
-        <form action="" method="POST" class="form-account col-12">
-            <div class="mb-3">
-                <label for="acc_name" class="col-4 col-form-label">Account name:</label><br>
-                <input type="text" class="form-control" id="acc_name" name="acc_name"><br>
-            </div>
-            <div class="mb-3">
-                <label for="amount" class="col-4 col-form-label">Amount:</label><br>
-                <input type="number" class="form-control" id="amount" name="amount" required min="0" value="0"
-                    step="any"><br>
-            </div>
-            <div class="mb-3" onLoad="loadCurrency()">
-                <label for="currency" class="col-sm-2 col-form-label">Currency</label><br>
-                <select class="form-control" id="currency" name="currency">
-                    <option selected>Select currency</option>
-                </select><br>
-            </div>
-            <input type="submit" value="Create account" class="btn btn-primary">
-        </form>
     </div>
     <div class="container">
-        <h2>My accounts</h2>
-        <div class="list-accounts"></div>
+        <div class="row mt-5">
+            <div class="d-flex flex-column align-items-sm-center">
+                <h2>My accounts</h2>
+
+                <table class="table list-accounts">
+                    <thead>
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">amount</th>
+                            <th scope="col">currency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <script src="handler.js"></script>
     <script src="account.js"></script>

@@ -13,23 +13,27 @@
 
 <body>
     <div class="container">
-        <div class="error-message"></div>
-        <div class="back btn btn-primary"><a href="index.html">
-                < Back to menu</a>
+        <div class="row mt-5">
+            <div class="d-flex flex-column align-items-sm-center">
+                <div class="error-message"></div>
+                <a class="btn btn-primary col-sm-8 mb-3" href="index.html" role="button">
+                    < Back to menu</a>
+                        <form class="form_category col-sm-8 d-flex flex-column" method="POST">
+                            <div class="mb-3">
+                                <label for="category_name" class="col-form-label">Category name:</label><br>
+                                <input type="text" class="form-control" id="category_name" name="category_name"><br>
+                            </div>
+                            <div class="mb-3">
+                                <label for="desc_category" class="col-form-label">Description:</label><br>
+                                <textarea rows="6" cols="40" class="form-control" id="desc_category"
+                                    name="desc_category"></textarea><br>
+                            </div>
+                            <input type="submit" value="Create category" class="btn btn-primary">
+                        </form>
+            </div>
         </div>
-        <form action="" class="form_category" method="POST">
-            <div class="mb-3">
-                <label for="category_name" class="col-sm-3 col-form-label">Category name:</label><br>
-                <input type="text" class="form-control" id="category_name" name="category_name"><br>
-            </div>
-            <div class="mb-3">
-                <label for="desc_category" class="col-sm-2 col-form-label">Description:</label><br>
-                <textarea rows="6" cols="40" class="form-control" id="desc_category"
-                    name="desc_category"></textarea><br>
-            </div>
-            <input type="submit" value="Create category" class="btn btn-primary">
-        </form>
     </div>
+
     <div class="container">
         <h2>My categories</h2>
         <div class="list-categories"></div>

@@ -24,13 +24,19 @@ var showError = (error) => {
 
 var createHTML = (item, type) => {
     var row = '';
-    var li = document.createElement('li');
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    var tbody = document.createElement('tbody');
+
+
+
     for (const keys in item) {
-        row += `${item[keys]} `;
+        td = `${item[keys]} `;
+        tr.innerText += td;
     }
 
-    li.innerText = row;
-    list.appendChild(li);
+    tbody.appendChild(tr);
+    list.appendChild(tbody);
 
     sincronizeStorage(type);
 }
@@ -71,9 +77,7 @@ function setCookie(value) {
 
 function getCookie() {
 
-    /*return document.cookie;*/
-    window.cookieMock = ''
-    return window.cookieMock;
+    return document.cookie;
 }
 
 /*
