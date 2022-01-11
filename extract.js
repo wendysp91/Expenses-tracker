@@ -6,17 +6,15 @@ var addExtract = (e) => {
     e.preventDefault();
     const from_account = document.querySelector('#from_account').value;
     const amount = document.querySelector('#amount').value;
-    const currency = document.querySelector('#currency').value;
 
-    if (from_account === '' || amount === '' || currency === '') {
+    if (from_account === '' || amount === '') {
         showError('Account fields cannot be empty');
         return;
     }
 
     const extractObj = {
         from_account,
-        amount,
-        currency
+        amount
     }
     var id = new Date().getUTCMilliseconds();
     addItem(extractObj, id, 'extract');
@@ -34,10 +32,6 @@ var myOnLoad = (obj) => {
     addOptions("from_account", obj);
 };
 
-var loadCurrency = () => {
-    addCurrencies("currency", currencies);
-};
-
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addExtract);
@@ -49,7 +43,6 @@ var eventListeners = () => {
             createHTML(items[keys], 'extract');
         }
         myOnLoad(accounts);
-        loadCurrency();
     });
 }
 

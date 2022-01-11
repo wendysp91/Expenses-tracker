@@ -30,20 +30,28 @@
                                 <input type="number" class="form-control" id="amount" name="amount" required min="0"
                                     value="0" step="any"><br>
                             </div>
-                            <div class="mb-3" onLoad="loadCurrency()">
-                                <label for="currency" class="col-form-label">Currency</label><br>
-                                <select class="form-control" id="currency" name="currency">
-                                    <option selected>Select currency</option>
-                                </select><br>
-                            </div>
+
                             <input type="submit" value="Deposit" class="btn btn-primary">
                         </form>
             </div>
         </div>
     </div>
     <div class="container">
-        <h2>My deposits</h2>
-        <div class="list-deposit"></div>
+        <div class="row mt-5">
+            <div class="d-flex flex-column align-items-sm-center">
+                <h2>My deposits</h2>
+                <table class="table list-deposit">
+                    <thead>
+                        <tr>
+                            <th scope="col">to account</th>
+                            <th scope="col">amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <script src="handler.js"></script>
     <script src="deposit.js"></script>

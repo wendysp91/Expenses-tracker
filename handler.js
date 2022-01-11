@@ -23,16 +23,13 @@ var showError = (error) => {
 }
 
 var createHTML = (item, type) => {
-    var row = '';
     var tr = document.createElement('tr');
-    var td = document.createElement('td');
     var tbody = document.createElement('tbody');
 
-
-
     for (const keys in item) {
-        td = `${item[keys]} `;
-        tr.innerText += td;
+        var td = document.createElement('td');
+        td.innerText = `${item[keys]} `;
+        tr.appendChild(td);
     }
 
     tbody.appendChild(tr);
