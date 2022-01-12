@@ -47,7 +47,8 @@ function addOptions(domElement, obj) {
 
     for (const key in obj) {
         var option = document.createElement("option");
-        option.text = key;
+        option.text = `${key}, ${obj[key]['currency']}`;
+        option.value = key;
         select.add(option);
     }
 }
