@@ -18,8 +18,6 @@ function getData() {
         .then(json => json)
 }
 
-
-
 var addTransfer = async (e) => {
 
     e.preventDefault();
@@ -37,8 +35,6 @@ var addTransfer = async (e) => {
     var newAmountTo = 0;
     var currencyTo = accounts[to_account]['currency'];
 
-
-
     if (from_account === '' || to_account === '' || amount === '') {
         showError('Account fields cannot be empty');
         return;
@@ -47,20 +43,15 @@ var addTransfer = async (e) => {
         showError('From account and to account must be different');
         return;
     }
-
     const transferObj = {
         from_account,
         to_account,
         amount
     }
-
-
-
     if (Number(accounts[from_account]['amount']) === 0 || Number(accounts[from_account]['amount']) < amount) {
         showError('Amount in from account is insufficient');
         return;
     }
-
     if (accounts[from_account]['currency'] !== accounts[to_account]['currency']) {
         var cookie = getCookie('rate');
         if (cookie != null) {
@@ -85,7 +76,6 @@ var addTransfer = async (e) => {
             }
             console.log(paramObj)
             transferOperation(paramObj)
-
         } else {
             var apiRate = await showData();
             var data = apiRate['data'];
@@ -93,10 +83,8 @@ var addTransfer = async (e) => {
             var eur = data['EUR'];
             var mxntousd = 1 / mxn;
             var eurtousd = 1 / eur;
-
             var fromCurrencyToUSD = { 'USD': 1, 'MXN': mxntousd, 'EUR': eurtousd };
             var fromUSDToCurrency = { 'USD': 1, 'MXN': mxn, 'EUR': eur };
-
 
             paramObj = {
                 from_account,
@@ -139,18 +127,17 @@ var transferOperation = (paramObj) => {
     } else {
         paramObj['newAmountTo'] = paramObj['fromCurrencyToUSD'][paramObj['currencyFrom']] * paramObj['number'] * paramObj['fromUSDToCurrency'][paramObj['currencyTo']] + Number(paramObj['amountTo']);
     }
-
     paramObj['accounts'][paramObj['from_account']]['amount'] = Math.round((paramObj['newAmountFrom'] + Number.EPSILON) * 100) / 100;
     paramObj['accounts'][paramObj['to_account']]['amount'] = Math.round((paramObj['newAmountTo'] + Number.EPSILON) * 100) / 100;
     localStorage.setItem('accounts', JSON.stringify(paramObj['accounts']));
 }
 
 var myOnLoad = (obj) => {
-    addOptions("to_account", obj);
-    addOptions("from_account", obj);
-    from_account = document.querySelector('#from_account').value;
-    to_account = document.querySelector('#to_account').value;
-    amount = document.querySelector('#amount').value;
+    for (const key in obj) {
+        addOptions("to_account", key, `, ${obj[key]['currency']}`);
+        addOptions("from_account", key, `, ${obj[key]['currency']}`);
+
+    }
 };
 
 //event listeners
@@ -166,5 +153,4 @@ var eventListeners = () => {
         myOnLoad(accounts);
     });
 }
-
 eventListeners();

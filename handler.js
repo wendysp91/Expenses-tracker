@@ -42,15 +42,13 @@ var sincronizeStorage = (type) => {
     localStorage.setItem(type, JSON.stringify(items));
 };
 
-function addOptions(domElement, obj) {
+function addOptions(domElement, key, currency = '') {
     var select = document.getElementById(domElement);
+    var option = document.createElement("option");
+    option.text = `${key}${currency}`;
+    option.value = key;
+    select.add(option);
 
-    for (const key in obj) {
-        var option = document.createElement("option");
-        option.text = `${key}, ${obj[key]['currency']}`;
-        option.value = key;
-        select.add(option);
-    }
 }
 
 function addCurrencies(domElement, array) {

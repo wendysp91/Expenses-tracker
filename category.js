@@ -27,7 +27,6 @@ var addCategory = (e) => {
 }
 
 //event listeners
-
 var eventListeners = () => {
     form.addEventListener('submit', addCategory);
 
@@ -38,5 +37,4 @@ var eventListeners = () => {
         }
     });
 }
-
 eventListeners();
