@@ -62,12 +62,14 @@ var addTransfer = async (e) => {
     }
 
     if (accounts[from_account]['currency'] !== accounts[to_account]['currency']) {
-        var cookie = getCookie();
-        var cookies = [];
-        if (cookie !== "" && cookie !== null) {
-            cookies = document.cookie.split('/');
-            var fromCurrencyToUSD = cookies[1];
-            var fromUSDToCurrency = cookies[2];
+        var cookie = getCookie('rate');
+        if (cookie != null) {
+            var rate = JSON.parse(cookie);
+            var fromCurrencyToUSD = rate.fromCurrencyToUSD;
+            var fromUSDToCurrency = rate.fromUSDToCurrency;
+            console.log(fromCurrencyToUSD)
+            console.log(fromUSDToCurrency)
+
             paramObj = {
                 from_account,
                 to_account,
@@ -81,6 +83,7 @@ var addTransfer = async (e) => {
                 fromCurrencyToUSD,
                 fromUSDToCurrency
             }
+            console.log(paramObj)
             transferOperation(paramObj)
 
         } else {
@@ -109,8 +112,8 @@ var addTransfer = async (e) => {
                 fromUSDToCurrency
             }
             transferOperation(paramObj)
-            setCookie("rate=/" + JSON.stringify(fromCurrencyToUSD) + "/" + JSON.stringify(fromUSDToCurrency));
-
+            var rate = { fromUSDToCurrency, fromCurrencyToUSD };
+            setCookie("rate", JSON.stringify(rate));
         }
 
     } else {
