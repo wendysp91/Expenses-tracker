@@ -35,7 +35,7 @@ var addTransfer = async (e) => {
     var newAmountTo = 0;
     var currencyTo = accounts[to_account]['currency'];
 
-    if (from_account === '' || to_account === '' || amount === '') {
+    if (from_account === '' || to_account === '' || amount === '' || category === '') {
         showError('Account fields cannot be empty');
         return;
     }
@@ -132,14 +132,23 @@ var transferOperation = (paramObj) => {
     localStorage.setItem('accounts', JSON.stringify(paramObj['accounts']));
 }
 
-var myOnLoad = (obj) => {
+var accountsSelect = (obj) => {
     for (const key in obj) {
         addOptions("to_account", key, `, ${obj[key]['currency']}`);
         addOptions("from_account", key, `, ${obj[key]['currency']}`);
 
     }
 };
-
+//Deleting an item from the deposit list
+var deleteItem = (item, id) => {
+    delete item[id]
+    localStorage.setItem('transfer', JSON.stringify(item))
+    const tbody = document.querySelector('.body_table');
+    tbody.innerHTML = '';
+    for (const keys in items) {
+        createHTML(items[keys], 'transfer', keys);
+    }
+}
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addTransfer);
@@ -148,9 +157,17 @@ var eventListeners = () => {
         items = JSON.parse(localStorage.getItem('transfer')) || {};
         accounts = JSON.parse(localStorage.getItem('accounts')) || {};
         for (const keys in items) {
-            createHTML(items[keys], 'transfer');
+            createHTML(items[keys], 'transfer', keys);
         }
-        myOnLoad(accounts);
+        accountsSelect(accounts);
     });
+    const tbody = document.querySelector('.body_table');
+    tbody.addEventListener("click", (e) => {
+        var id = e.target.getAttribute("data-id")
+        if (e.target.innerText === "X") {
+            console.log(items[id])
+            deleteItem(items, id);
+        }
+    })
 }
 eventListeners();

@@ -19,16 +19,16 @@
                 <a class="btn btn-primary col-sm-8 mb-3" href="index.html" role="button">
                     < Back to menu</a>
                         <form class="form_transfer col-sm-8 d-flex flex-column" method="POST">
-                            <div class="mb-3" onLoad="myOnLoad()">
+                            <div class="mb-3" onLoad="accountsSelect()">
                                 <label for="from_account" class="col-form-label">From account:</label><br>
                                 <select class="form-control" id="from_account" name="from_account">
-                                    <option selected>Select an account</option>
+                                    <option value="" selected>Select an account</option>
                                 </select><br>
                             </div>
-                            <div class="mb-3" onLoad="myOnLoad()">
+                            <div class="mb-3" onLoad="accountsSelect()">
                                 <label for="to_account" class="col-form-label">To account:</label><br>
                                 <select type="text" class="form-control" id="to_account" name="to_account">
-                                    <option selected>Select an account</option>
+                                    <option value="" selected>Select an account</option>
                                 </select><br>
                             </div>
                             <div class="mb-3">
@@ -52,9 +52,10 @@
                             <th scope="col">from account</th>
                             <th scope="col">to account</th>
                             <th scope="col">amount</th>
+                            <th scope="col">delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="body_table">
                     </tbody>
                 </table>
             </div>

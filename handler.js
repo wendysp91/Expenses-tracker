@@ -1,4 +1,3 @@
-
 let items = new Object();
 const currencies = ["USD", "MXN", "EUR"];
 
@@ -22,16 +21,19 @@ var showError = (error) => {
     }, 5000);
 }
 
-var createHTML = (item, type) => {
+var createHTML = (item, type, id) => {
     var tr = document.createElement('tr');
-    var tbody = document.createElement('tbody');
+    var tbody = document.querySelector('.body_table');
 
     for (const keys in item) {
         var td = document.createElement('td');
         td.innerText = `${item[keys]} `;
         tr.appendChild(td);
     }
-
+    var td = document.createElement('td');
+    td.innerText = "X";
+    td.setAttribute("data-id", id)
+    tr.appendChild(td);
     tbody.appendChild(tr);
     list.appendChild(tbody);
 
@@ -80,38 +82,3 @@ function getCookie(name) {
     return null;
 }
 
-/*
-
-
-en transfer if el currency de from-account != to-account
-then if cookie existe
-then get value y hacer cosas
-else
-then hacer peticion a la api
-cuando responda ok
-crear cookie con el valor base y la fecha de expiracion
-exchangeRate=mxn: 20.51118, eur: 0.88531; expirationDate=Fri, 07 Jan 2022 23:28:52 GMT
-
-function setCookie(name,value,days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-}
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-function eraseCookie(name) {
-    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
-*/

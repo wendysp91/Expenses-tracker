@@ -8,7 +8,7 @@ var addDeposit = (e) => {
     const amount = document.querySelector('#amount').value;
     const category = document.querySelector('#category').value;
 
-    if (to_account === '' || amount === '') {
+    if (to_account === '' || amount === '' || category === '') {
         showError('Account fields cannot be empty');
         return;
     }
@@ -30,7 +30,7 @@ var addDeposit = (e) => {
 
 }
 
-var myOnLoad = (obj) => {
+var accountsSelect = (obj) => {
     for (const key in obj) {
         addOptions("to_account", key, `, ${obj[key]['currency']}`);
     }
@@ -41,7 +41,16 @@ var categoriesSelect = (obj) => {
         addOptions("category", key);
     }
 }
-
+//Deleting an item from the deposit list
+var deleteItem = (item, id) => {
+    delete item[id]
+    localStorage.setItem('deposit', JSON.stringify(item))
+    const tbody = document.querySelector('.body_table');
+    tbody.innerHTML = '';
+    for (const keys in items) {
+        createHTML(items[keys], 'deposit', keys);
+    }
+}
 //event listeners
 var eventListeners = () => {
     form.addEventListener('submit', addDeposit);
@@ -51,10 +60,18 @@ var eventListeners = () => {
         accounts = JSON.parse(localStorage.getItem('accounts')) || {};
         categories = JSON.parse(localStorage.getItem('categories')) || {};
         for (const keys in items) {
-            createHTML(items[keys], 'deposit');
+            createHTML(items[keys], 'deposit', keys);
         }
-        myOnLoad(accounts);
+        accountsSelect(accounts);
         categoriesSelect(categories)
     });
+    const tbody = document.querySelector('.body_table');
+    tbody.addEventListener("click", (e) => {
+        var id = e.target.getAttribute("data-id")
+        if (e.target.innerText === "X") {
+            console.log(items[id])
+            deleteItem(items, id);
+        }
+    })
 }
 eventListeners();
