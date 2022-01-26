@@ -31,6 +31,7 @@ var createHTML = (item, type, id) => {
         tr.appendChild(td);
     }
     var td = document.createElement('td');
+    td.style.cursor = "pointer";
     td.innerText = "X";
     td.setAttribute("data-id", id)
     tr.appendChild(td);
