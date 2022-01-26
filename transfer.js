@@ -35,7 +35,7 @@ var addTransfer = async (e) => {
     var newAmountTo = 0;
     var currencyTo = accounts[to_account]['currency'];
 
-    if (from_account === '' || to_account === '' || amount === '' || category === '') {
+    if (from_account === '' || to_account === '' || amount === '') {
         showError('Account fields cannot be empty');
         return;
     }
